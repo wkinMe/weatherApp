@@ -1,38 +1,47 @@
-.App {
-  text-align: center;
+@font-face {
+    font-family: "Hahmlet";
+    src:local("Hahmlet"),
+        url("./fonts/Hahmlet-Thin.woff") format("woff");
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+* {
+    font-family: "Hahmlet";
+    font-weight: thin;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+body {
+    background-color: #000;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.container {
+    margin-left: 15px;
 }
 
-.App-link {
-  color: #61dafb;
+.city_input {
+    color: #fff;
+    outline: none;
+    background-color: inherit;
+    font-size: 30px;
+    border: none;
+    border-bottom: #fff 1px solid;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.city_input::placeholder{
+    color: white;
+    font-family: "Hahmlet";
+
+}
+
+.loading {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 36px;
+    color: white;
+}
+
+.error {
+    font-size: 36px;
+    color: white;
 }
