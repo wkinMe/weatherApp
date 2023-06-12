@@ -1,6 +1,10 @@
-import React, {FC} from "react";
+import React, {FC, MouseEventHandler} from "react";
 import cn from "classnames"
 import "./css/Card.css"
+import { useDispatch } from "react-redux";
+import {removeCity} from "../store/slices/weatherNowSlice"
+import {gsap} from "gsap"
+
 interface CardItemProps {
     city: string
     country: string
@@ -16,8 +20,13 @@ const Card: FC<CardItemProps> = ({city, country, tempC, weatherCode, weatherCond
     const datetime = time.split(" ");
     const date = datetime[0].split("-").reverse().join(".");
     const currentTime = datetime[1];
+    const dispatch = useDispatch();
 
-    let bg;
+    const removeCurrentCity = (city: string) => {
+        dispatch(removeCity(city));
+    }
+
+    let bg: string;
     if (isDay) {
         bg = cn('card', {
             day: weatherCode < 1009,
@@ -34,7 +43,21 @@ const Card: FC<CardItemProps> = ({city, country, tempC, weatherCode, weatherCond
         })
     }
     return (
-        <div className={bg}>
+        <div className={bg} key={city}>
+            <button className="forecast">Click to get forecast for a 7 days</button>
+            <button className="close" onClick={(e: any) => {
+                    const duration = .5;
+                    const itemToRemove = e.currentTarget.closest(`.card`);
+                    gsap.to(itemToRemove, {
+                        y: -50,
+                        duration,
+                        opacity: 0,
+                        display: `none`,
+                    })
+                    setTimeout(() => removeCurrentCity(city), duration * 1000);
+                }
+            }>
+            ×</button>
             <img src={iconSrc}/>
             <div className="city_info">
                 <span className="city_info_name">{city}</span>

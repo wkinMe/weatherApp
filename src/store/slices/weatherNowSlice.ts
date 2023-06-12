@@ -1,6 +1,7 @@
-import { AppDispatch } from './../../store/store';
-import {createSlice, PayloadAction, CaseReducer} from "@reduxjs/toolkit"
-import { getCurrentWheather } from '../../api/currentWeather';
+import { RootState } from './../../store/store';
+import {createSlice, PayloadAction, createAsyncThunk, Slice} from "@reduxjs/toolkit"
+import { getCurrentWeather } from '../../api/currentWeather';
+import { getWeatherFromLocalStorage, setWeatherToLocalStorage, alertError, getNewCity} from '../actions/weatherNowActions';
 
 export interface Weather {
     location: Location;
@@ -47,47 +48,51 @@ export interface Weather {
     code: number;
   }
 
-interface SliceState  {
-    cities: Weather[]
+export interface SliceState  {
+    cities: Weather[],
     isLoading: boolean
-    error: string
+    error: string | undefined
 }
 
 const initialState: SliceState = {
-    cities: [],
+    cities: getWeatherFromLocalStorage(),
     isLoading: false,
     error: '',
-}
-
-export const getCity = (city: string) => async (dispatch: AppDispatch) => {
-    try {
-        dispatch(fetchWeatherInfo())
-        const newCityWeather = await getCurrentWheather(city)
-        dispatch(addNewCity(newCityWeather))
-    } catch (e: any) {
-        dispatch(fetchError(e.message))
-    }
 }
 
 export const weatherNowSlice = createSlice({
     name: 'weatherNow',
     initialState,
     reducers: {
-        addNewCity: (state: SliceState, action: PayloadAction<Weather>) => {
-            state.isLoading = false
-            state.cities.push(action.payload)
-        },
-        fetchWeatherInfo: (state: SliceState) => {
-            state.isLoading = true
-            state.error = ''
-        },
-        fetchError: (state: SliceState, action: PayloadAction<string>) => {
-            state.isLoading = false
-            state.error = action.payload
+        removeCity: (state, action: PayloadAction<string>) => {
+            state.cities = state.cities.filter(c => c.location.name !== action.payload);
+            setWeatherToLocalStorage(state.cities)
         }
+    },
+    extraReducers: (builder) => {
+        builder.addCase(getNewCity.pending, (state) => {
+            state.isLoading = true;
+            state.error = ''
+        })
+        builder.addCase(getNewCity.rejected, (state, action) => {
+            state.isLoading = false;
+            const eMsg = action.payload;
+            alertError(state, eMsg)
+        })
+        builder.addCase(getNewCity.fulfilled, (state, action) => {
+            if (state.cities.find(c => c.location.name === action.payload.location.name)) {
+                state.isLoading = false;
+                const eMsg = 'This city is already in the list'
+                alertError(state, eMsg)
+            } else {
+                state.isLoading = false;
+                state.cities.push(action.payload);
+                setWeatherToLocalStorage(state.cities)
+            }
+        })
     }
 })
 
-const {addNewCity, fetchWeatherInfo, fetchError} = weatherNowSlice.actions
 
-export default weatherNowSlice.reducer
+export const {removeCity} = weatherNowSlice.actions
+export default weatherNowSlice.reducer;

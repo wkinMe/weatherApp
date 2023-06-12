@@ -1,1 +1,2 @@
-Simple weather app
+Simple weather app.
+Stack: React+Redux+TS

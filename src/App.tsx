@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 import CurrentWeather from './components/CardContainer';
 import { useAppDispatch, useAppSelector } from './store/slices/customHooks';
-import { getCity, Weather, weatherNowSlice }from './store/slices/weatherNowSlice';
+import { getNewCity }from './store/actions/weatherNowActions';
 
 const App = () => {
   const cities = useAppSelector(state => state.weatherNowSlice.cities)
@@ -16,7 +16,7 @@ const App = () => {
         if (e.key !== "Enter") {
           return
         }
-        dispatch(getCity(e.currentTarget.value))
+        dispatch(getNewCity(e.currentTarget.value))
         e.currentTarget.value = ''
       }}/>
       {isLoading && <h1 className='loading'>Loading...</h1>}
