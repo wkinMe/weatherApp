@@ -1,9 +1,11 @@
 import React, {FC, MouseEventHandler} from "react";
 import cn from "classnames"
 import "./css/Card.css"
+import "./css/Weather.css"
 import { useDispatch } from "react-redux";
 import {removeCity} from "../store/slices/weatherNowSlice"
 import {gsap} from "gsap"
+import {Link} from "react-router-dom"
 
 interface CardItemProps {
     city: string
@@ -16,6 +18,26 @@ interface CardItemProps {
     isDay: number
 }
 
+export const getBGColor = (isDay: number, weatherCode: number) => {
+    let bg: string;
+    if (isDay) {
+        bg = cn({
+            day: weatherCode < 1009,
+            day_cloudy: weatherCode >= 1009 && weatherCode < 1147,
+            day_dull: weatherCode >= 1147 && weatherCode < 1240,
+            day_downpour: weatherCode >= 1240
+        })
+    } else {
+        bg = cn({
+            night: weatherCode < 1009,
+            night_cloudy: weatherCode >= 1009 && weatherCode < 1147,
+            night_dull: weatherCode >= 1147 && weatherCode < 1240,
+            night_downpour: weatherCode >= 1240
+        })
+    }
+    return bg
+}
+
 const Card: FC<CardItemProps> = ({city, country, tempC, weatherCode, weatherConditions, iconSrc, time, isDay}) => {
     const datetime = time.split(" ");
     const date = datetime[0].split("-").reverse().join(".");
@@ -26,24 +48,10 @@ const Card: FC<CardItemProps> = ({city, country, tempC, weatherCode, weatherCond
         dispatch(removeCity(city));
     }
 
-    let bg: string;
-    if (isDay) {
-        bg = cn('card', {
-            day: weatherCode < 1009,
-            day_cloudy: weatherCode >= 1009 && weatherCode < 1147,
-            day_dull: weatherCode >= 1147 && weatherCode < 1240,
-            day_downpour: weatherCode >= 1240
-        })
-    } else {
-        bg = cn('card', {
-            night: weatherCode < 1009,
-            night_cloudy: weatherCode >= 1009 && weatherCode < 1147,
-            night_dull: weatherCode >= 1147 && weatherCode < 1240,
-            night_downpour: weatherCode >= 1240
-        })
-    }
+    let bg = getBGColor(isDay, weatherCode);
+
     return (
-        <div className={bg} key={city}>
+        <Link to = {city} className={"card " + bg} key={city}>
             <button className="forecast">Click to get forecast for a 7 days</button>
             <button className="close" onClick={(e: any) => {
                     const duration = .5;
@@ -69,7 +77,7 @@ const Card: FC<CardItemProps> = ({city, country, tempC, weatherCode, weatherCond
                 <span className="datetime_info_text">{currentTime}</span>
             </div>
             <span className = 'conditions'>{weatherConditions}</span>
-        </div>
+        </Link>
     )
 }
 

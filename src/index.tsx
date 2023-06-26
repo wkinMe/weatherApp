@@ -4,15 +4,26 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {Provider} from "react-redux"
+import {createBrowserRouter, RouterProvider} from "react-router-dom"
 import store from './store/store';
+import Forecast from './components/Forecast';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 
+const router = createBrowserRouter([{
+  path: "/",
+  element: <App />,
+  children: [{
+    path: ":city",
+    element: <Forecast />
+  }]
+}])
+
 root.render(
   <Provider store = {store}>
-    <App />
+    <RouterProvider router={router}/>
   </Provider>
 );
 

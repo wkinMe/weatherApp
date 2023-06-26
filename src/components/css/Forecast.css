@@ -1,0 +1,17 @@
+.loader {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff;
+}
+
+.title {
+    color: white;
+}
+
+.forecastContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 250px);
+    gap: 15px;
+}

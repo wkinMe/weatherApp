@@ -1,9 +1,11 @@
 import {configureStore} from "@reduxjs/toolkit"
 import weatherNowSlice from "./slices/weatherNowSlice"
+import forecastSlice from './slices/forcastSlice';
 
 const store = configureStore({
     reducer: {
         weatherNowSlice,
+        forecastSlice,
     }
 })
 

@@ -1,6 +1,4 @@
-import { RootState } from './../../store/store';
 import {createSlice, PayloadAction, createAsyncThunk, Slice} from "@reduxjs/toolkit"
-import { getCurrentWeather } from '../../api/currentWeather';
 import { getWeatherFromLocalStorage, setWeatherToLocalStorage, alertError, getNewCity} from '../actions/weatherNowActions';
 
 export interface Weather {

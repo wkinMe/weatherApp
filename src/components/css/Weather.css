@@ -1,0 +1,47 @@
+.day {
+    background-color: #D2F7FF;
+}
+
+.day span, button {
+    color: #202020;
+}
+
+.day_cloudy {
+    color: #202020;
+    background-color: #BDDDE3;
+}
+
+.day_cloudy span, button {
+    color: #202020;
+}
+
+
+.day_dull {
+    color: #EFEFEF;
+    background-color: #8BB3BC;
+}
+
+.day_downpour {
+    color: #EFEFEF;
+    background-color: #617E85;
+}
+
+.night {
+    color: #EFEFEF;
+    background-color: #406AFF;
+}
+
+.night_cloudy {
+    color: #EFEFEF;
+    background-color: #174AFF;
+}
+
+.night_dull {
+    color: #EFEFEF;
+    background-color: #1534A5;
+}
+
+.night_downpour {
+    color: #EFEFEF;
+    background-color: #0D1F5C;
+}

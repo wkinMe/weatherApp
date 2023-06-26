@@ -3,7 +3,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit"
 import { RootState } from "../store"
 import { getCurrentWeather } from "../../api/currentWeather"
 
-export const getNewCity = createAsyncThunk<Weather, string, {state: RootState, rejectValue: string}>(
+export const getNewCity = createAsyncThunk<Weather, string, {rejectValue: string}>(
     'weatherNow/fetchCity',
     async (city: string, {rejectWithValue}) => {
         try {
