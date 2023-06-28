@@ -1,6 +1,5 @@
 import {SliceState, Weather} from "../slices/weatherNowSlice"
 import { createAsyncThunk } from "@reduxjs/toolkit"
-import { RootState } from "../store"
 import { getCurrentWeather } from "../../api/currentWeather"
 
 export const getNewCity = createAsyncThunk<Weather, string, {rejectValue: string}>(

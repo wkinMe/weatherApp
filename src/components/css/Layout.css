@@ -1,0 +1,41 @@
+body {
+    background-color: #000;
+}
+
+.container {
+    margin-left: 15px;
+}
+
+.city_input {
+    color: #fff;
+    outline: none;
+    background-color: inherit;
+    font-size: 30px;
+    border: none;
+    border-bottom: #fff 1px solid;
+}
+
+.city_input::placeholder{
+    color: white;
+    font-family: "Hahmlet";
+}
+
+.loading {
+    position: absolute;
+    z-index: 5;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 36px;
+    color: rgb(96, 96, 96);
+}
+
+.error {
+    position: absolute;
+    z-index: 5;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 36px;
+    color: rgb(96, 96, 96);
+}

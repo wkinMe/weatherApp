@@ -65,6 +65,9 @@ export const weatherNowSlice = createSlice({
         removeCity: (state, action: PayloadAction<string>) => {
             state.cities = state.cities.filter(c => c.location.name !== action.payload);
             setWeatherToLocalStorage(state.cities)
+        },
+        hideErrorMessage: (state) => {
+            alertError(state, '')
         }
     },
     extraReducers: (builder) => {
@@ -92,5 +95,5 @@ export const weatherNowSlice = createSlice({
 })
 
 
-export const {removeCity} = weatherNowSlice.actions
+export const {removeCity, hideErrorMessage} = weatherNowSlice.actions
 export default weatherNowSlice.reducer;

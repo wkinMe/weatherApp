@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import {FC} from 'react';
 import {getBGColor} from "./CardItem"
 import "./css/ForecastItem.css"
 import sunriseImg from "../imgs/sunrise.svg"
@@ -10,9 +10,6 @@ interface ForecastItemProps {
     date: string,
     sunrise: string,
     sunset: string,
-    // moonrise: string,
-    // moonset: string,
-    // moonPhase: string,
     conditions: Conditions
     maxTemp: number
     minTemp: number

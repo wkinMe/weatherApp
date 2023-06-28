@@ -1,3 +1,4 @@
+import { RootState } from './../store';
 import { createSlice } from '@reduxjs/toolkit';
 import { getNewForecast } from '../actions/forecastActions';
 
@@ -77,7 +78,11 @@ const initialState: initialState = {
 export const forecastSlice = createSlice({
     name: `forecast`,
     initialState,
-    reducers: {},
+    reducers: {
+      clearForecast: (state) => {
+        state.weather = {} as ForecastWeather
+      }
+    },
     extraReducers: (builder) => {
         builder.addCase(getNewForecast.pending, (state) => {
             state.error = ''
@@ -94,4 +99,5 @@ export const forecastSlice = createSlice({
     }
 })
 
+export const {clearForecast} = forecastSlice.actions
 export default forecastSlice.reducer

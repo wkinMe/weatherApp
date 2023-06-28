@@ -1,4 +1,4 @@
-import React, {FC} from "react";
+import {FC} from "react";
 import CardItem from "./CardItem"
 import "./css/Current.css"
 import {Weather} from "../store/slices/weatherNowSlice"

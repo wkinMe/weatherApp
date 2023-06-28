@@ -6,8 +6,24 @@
     color: #fff;
 }
 
+.titleContainer {
+    display: flex;
+    align-items: center;
+}
+
 .title {
     color: white;
+}
+
+.backBtn {
+    margin-right: 20px;
+    font-size: 32px;
+    color: white;
+    background: none;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
 }
 
 .forecastContainer {

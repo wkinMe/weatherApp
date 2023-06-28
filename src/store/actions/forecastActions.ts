@@ -1,3 +1,4 @@
+import { RootState } from './../store';
 import { ForecastWeather } from '../slices/forcastSlice';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { getForecast } from '../../api/currentWeather';

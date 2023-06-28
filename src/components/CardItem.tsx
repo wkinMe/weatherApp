@@ -1,10 +1,10 @@
-import React, {FC, MouseEventHandler} from "react";
+import {FC} from "react";
 import cn from "classnames"
 import "./css/Card.css"
 import "./css/Weather.css"
 import { useDispatch } from "react-redux";
 import {removeCity} from "../store/slices/weatherNowSlice"
-import {gsap} from "gsap"
+import gsap from "gsap"
 import {Link} from "react-router-dom"
 
 interface CardItemProps {
@@ -48,24 +48,43 @@ const Card: FC<CardItemProps> = ({city, country, tempC, weatherCode, weatherCond
         dispatch(removeCity(city));
     }
 
-    let bg = getBGColor(isDay, weatherCode);
+    const cardDelete = (e: React.MouseEvent<HTMLElement>) => {
+        e.preventDefault()
+
+        const duration = .25;
+        const itemToRemove = e.currentTarget.closest(`.card`);
+
+        gsap.to(itemToRemove, {
+            y: -150,
+            scale: .3,
+            duration,
+            opacity: 0,
+            display: `none`,
+        })
+        setTimeout(() => removeCurrentCity(city), duration * 1000);
+
+        const cards = Array.from(document.querySelectorAll(`.card`))
+
+        if (itemToRemove) {
+            const indToRemove = cards.indexOf(itemToRemove)
+            for(let i = cards.length - 1; i > indToRemove; i--) {
+                gsap.to(cards[i], {
+                    x: -cards[i].clientWidth,
+                    duration: .2,
+                })
+            }
+        }
+
+    }
+
+
+    const bg = getBGColor(isDay, weatherCode);
 
     return (
         <Link to = {city} className={"card " + bg} key={city}>
-            <button className="forecast">Click to get forecast for a 7 days</button>
-            <button className="close" onClick={(e: any) => {
-                    const duration = .5;
-                    const itemToRemove = e.currentTarget.closest(`.card`);
-                    gsap.to(itemToRemove, {
-                        y: -50,
-                        duration,
-                        opacity: 0,
-                        display: `none`,
-                    })
-                    setTimeout(() => removeCurrentCity(city), duration * 1000);
-                }
-            }>
-            ×</button>
+            <span className="forecast">Click to get forecast for a 7 days</span>
+            <span className="close" onClick={cardDelete}>
+            ×</span>
             <img src={iconSrc}/>
             <div className="city_info">
                 <span className="city_info_name">{city}</span>
